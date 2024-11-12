@@ -1,0 +1,4 @@
+from django.shortcuts import render
+
+def health(request):
+    return render(request, 'health_logging/health.html')
