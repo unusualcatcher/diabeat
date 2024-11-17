@@ -1,6 +1,6 @@
 # DiaBeat
 
-DiaBeat is a cutting-edge platform designed to empower individuals in managing and understanding their diabetes risk. The platform allows users to log their health markers, such as blood glucose levels, BMI, and physical activity, in a secure and user-friendly digital space. These entries can be visualized through intuitive graphs, providing valuable insights into trends over time. DiaBeat also features a robust prediction tool powered by advanced machine learning algorithms, enabling users to assess their risk for diabetes and take proactive steps toward a healthier lifestyle.
+DiaBeat is a cutting-edge platform designed to empower individuals in managing and understanding their diabetes risk. The platform allows users to log their health markers, such as blood glucose levels, BMI etc. in a user-friendly digital space. These entries can be visualized through intuitive graphs, providing valuable insights into trends over time. DiaBeat also features a robust prediction tool powered by advanced machine learning algorithms, enabling users to assess their risk for diabetes and take proactive steps toward a healthier lifestyle.
 
 ## Features
 
