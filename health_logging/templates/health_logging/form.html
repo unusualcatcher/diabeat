@@ -1,0 +1,150 @@
+{% extends 'diabetes_prediction/base.html' %}
+
+{% block title %}Health{% endblock %}
+
+{% block content %}
+<html>
+<head>
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f5f5f5;
+        }
+        .form-section { display: none; }
+        .form-section.active { display: block; }
+        .left-section {
+            width: 40%;
+            background-color: #949EFF;
+            color: #fff;
+            border-top-left-radius: 15px;
+            border-bottom-left-radius: 15px;
+        }
+        .left-section h3 {
+            font-weight: 600;
+        }
+        .left-section h1 {
+            font-size: 3rem;
+            font-weight: bold;
+        }
+        .container {
+            width: 100%;
+            max-width: 500px;
+        }
+        h2 {
+            color: #949EFF;
+            font-weight: 600;
+        }
+        .form-control {
+            border-radius: 8px;
+            padding: 10px;
+            font-size: 1rem;
+        }
+        .btn-success {
+            background-color: #4CAF50;
+            border: none;
+            font-weight: 500;
+            color: white;
+            border-radius: 8px;
+            padding: 10px 20px;
+        }
+        .btn-primary {
+            background-color: #949EFF;
+            border: none;
+            font-weight: 500;
+            color: white;
+            border-radius: 8px;
+            padding: 10px 20px;
+        }
+        .alert-success {
+            font-weight: 500;
+            border-radius: 8px;
+            padding: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="d-flex" style="height: 100vh;">
+        <div class="d-none d-md-flex text-white flex-column p-4 left-section">
+            <div class="mb-4">
+                <h3>DiaBeat</h3>
+            </div>
+            <div class="d-flex flex-grow-1 justify-content-center align-items-center">
+                <h1 class="text-center">Prevention is always better than cure!</h1>
+            </div>
+        </div>
+        <div class="container mt-5">
+            <h2 class="mb-4">Patient's Detail Form</h2>
+            {% if diabetes %}
+                {% if diabetes == 1 %}
+                    <div class="alert alert-danger mt-3">
+                        {{ message }}
+                    </div>
+                {% else %}
+                    <div class="alert alert-success mt-3">
+                        {{ message }}
+                    </div>
+                {% endif %}
+            {% endif %}
+            <form id="patientdetailsform" action="" method="post">
+                {% csrf_token %}
+                <div class="form-section active">
+                    <label for="pregnancies">Number of times pregnant:</label>
+                    <input type="text" name="pregnancies" id="pregnancies" class="form-control" required placeholder="Enter number of pregnancies here"><br>
+                    
+                    <label for="glucose">Plasma glucose concentration (mg/dL):</label>
+                    <input type="text" name="glucose" id="glucose" class="form-control" required placeholder="Enter glucose level here"><br>
+                    
+                    <label for="blood pressure">Diastolic blood pressure (mmHg):</label>
+                    <input type="text" name="blood pressure" id="blood pressure" class="form-control" required placeholder="Enter blood pressure here"><br>
+                    
+                    <label for="skin thickness">Triceps skinfold thickness (mm):</label>
+                    <input type="text" name="skin thickness" id="skin thickness" class="form-control" required placeholder="Enter skin thickness here"><br>
+                    
+                    <button type="button" class="btn btn-success" onclick="nextSection()">Next</button>
+                </div>
+                <div class="form-section">
+                    <label for="insulin">Serum insulin (µU/mL):</label>
+                    <input type="text" name="insulin" id="insulin" class="form-control" required placeholder="Enter insulin level here"><br>
+                    
+                    <label for="BMI">Body Mass Index (kg/m²):</label>
+                    <input type="text" name="BMI" id="BMI" class="form-control" required placeholder="Enter BMI here"><br>
+                    
+                    <label for="diabetes pedigree function">Diabetes Pedigree Function (0.0 - 2.5):</label>
+                    <input type="text" name="diabetes pedigree function" id="diabetes pedigree function" class="form-control" required placeholder="Enter diabetes pedigree function here"><br>
+                    
+                    <label for="age">Age of patient:</label>
+                    <input type="text" name="age" id="age" class="form-control" required placeholder="Enter age here"><br>
+                    
+                    <label for="date">Date of Log:</label>
+                    <input type="date" name="date" id="date" class="form-control" required><br>
+                    
+                    <button type="button" class="btn btn-success" onclick="previousSection()">Previous</button>
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <script>
+        let currentSection = 0;
+        const sections = document.querySelectorAll('.form-section');
+        function showSection(index) {
+            sections.forEach((section, i) => {
+                section.classList.toggle('active', i === index);
+            });
+        }
+        function nextSection() {
+            if (currentSection < sections.length - 1) {
+                currentSection++;
+                showSection(currentSection);
+            }
+        }
+        function previousSection() {
+            if (currentSection > 0) {
+                currentSection--;
+                showSection(currentSection);
+            }
+        }
+    </script>
+</body>
+</html>
+{% endblock %}

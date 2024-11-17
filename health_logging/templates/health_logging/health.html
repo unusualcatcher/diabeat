@@ -3,5 +3,322 @@
 {% block title %}Health{% endblock %}
 
 {% block content %}
-health page
+<style>
+    /* Apply Poppins font globally */
+    body,
+    h1,
+    h2,
+    h3,
+    p {
+        font-family: 'Poppins', Arial, Helvetica, sans-serif;
+    }
+
+    /* Styling for the stat boxes */
+    .box {
+        border-radius: 25px;
+        height: 140px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+        background-color: #f8f9fa;
+        padding: 15px;
+        color: #333;
+        transition: transform 0.2s ease-in-out;
+    }
+
+    .box:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 15px rgba(0, 0, 0, 0.15);
+    }
+
+    /* Individual colors for the boxes */
+    .box:nth-child(1) {
+        background-color: #e9e8fd;
+        /* Light purple */
+    }
+
+    .box:nth-child(2) {
+        background-color: #e8fdee;
+        /* Light green */
+    }
+
+    .box:nth-child(3) {
+        background-color: #fde8e8;
+        /* Light pink */
+    }
+
+    .box:nth-child(4) {
+        background-color: #292b2c;
+        /* Black */
+        color: white;
+    }
+
+    .box p {
+        margin: 5px 0;
+    }
+
+    .box p:first-child {
+        font-size: 36px;
+        font-weight: bold;
+    }
+
+    .box p:last-child {
+        font-size: 14px;
+        opacity: 0.7;
+    }
+
+    /* Main container styling */
+    #main {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        background-color: #f8f9fa;
+        padding: 20px;
+    }
+
+    /* Grid for stat boxes */
+    .stats-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 20px;
+        margin-bottom: 30px;
+        width: 100%;
+        max-width: 1200px;
+    }
+
+    /* Carousel container styling */
+    .carousel-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-top: 30px;
+        padding: 20px;
+        background-color: #ffffff;
+        border-radius: 15px;
+        box-shadow: 0 8px 12px rgba(0, 0, 0, 0.1);
+        max-width: 700px;
+        width: 100%;
+    }
+
+    .carousel-image {
+        max-width: 100%;
+        height: auto;
+        object-fit: cover;
+        border-radius: 10px;
+        margin-bottom: 15px;
+    }
+
+    /* Next button styling */
+    .carousel-button {
+        padding: 12px 30px;
+        background-color: #5a67d8;
+        color: white;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        font-size: 18px;
+        font-weight: bold;
+        transition: background-color 0.3s ease, transform 0.2s ease-in-out;
+        width: 200px;
+        text-align: center;
+    }
+
+    .carousel-button:hover {
+        background-color: #434bb7;
+        transform: scale(1.05);
+    }
+
+    h3 {
+        color: #333;
+        font-family: 'Poppins', Arial, sans-serif;
+        margin-bottom: 20px;
+    }
+
+    /* Health Log Section */
+    .logs-container {
+        margin-top: 40px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 100%;
+        padding: 30px;
+    }
+
+    .log-box {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        background-color: #ffffff;
+        padding: 20px;
+        border-radius: 35px;
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+        margin: 15px 0;
+        width: 100%;
+        max-width: 900px;
+        text-align: left;
+    }
+
+    .log-box p {
+        margin: 10px 0;
+        font-size: 20px;
+    }
+
+    .log-box p:first-child {
+        font-size: 24px;
+        font-weight: bold;
+    }
+
+    .log-box p:last-child {
+        font-size: 20px;
+        opacity: 0.9;
+    }
+
+    .log-box .prediction {
+        font-size: 20px;
+        font-weight: bold;
+        color: #ff6347;
+    }
+
+    /* Make it more responsive */
+    @media screen and (max-width: 768px) {
+        .stats-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .log-box {
+            flex-direction: column;
+            text-align: left;
+            max-width: 100%;
+        }
+
+        .log-box p {
+            font-size: 18px;
+        }
+    }
+
+    /* Health logs section wrapper styling */
+    .logs-wrapper {
+        background-color: #5a67d8;
+        padding: 30px;
+        border-radius: 35px;
+        box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+        width: 100%;
+        max-width: 1000px;
+        margin-top: 15px;
+    }
+
+    .logs-wrapper h3 {
+        text-align: center;
+        font-weight: bold;
+        color: white;
+    }
+</style>
+
+<div id="main">
+
+    <!-- Statistic Boxes (Second section) -->
+    <div class="stats-grid">
+        <div class="box">
+            <p>{{ last_health.age }}</p>
+            <p>AGE</p>
+        </div>
+        <div class="box">
+            <p>{{ last_health.diabetes_pedigree_function }}</p>
+            <p>DIABETES PEDIGREE FUNCTION</p>
+        </div>
+        <div class="box">
+            <p>{{ last_health.skin_thickness }}<span style="font-size: 12px;"> mm</span></p>
+            <p>SKIN THICKNESS</p>
+        </div>
+        <div class="box">
+            <p>{{ last_health.bmi }}<span style="font-size: 12px;"> kg/m²</span></p>
+            <p>BMI</p>
+        </div>
+    </div>
+
+    <!-- Image Carousel (First section) -->
+    <div class="carousel-container">
+        <h3>Your Health Visualization</h3>
+        <img id="carousel-image" src="{{ MEDIA_ROOT }}{{ blood_pressure_plot }}" alt="Plot" class="carousel-image">
+        <div style="display: flex; gap: 10px;">
+            <button id="prev-button" class="carousel-button">Prev</button>
+            <button id="next-button" class="carousel-button">Next</button>
+        </div>
+    </div>
+
+    <!-- Health Logs Section -->
+    <div class="logs-wrapper">
+        <h3>Health Logs</h3>
+        {% for log in health_logs %}
+        <div class="log-box">
+            <div>
+                <p>Age</p>
+                <p>{{ log.age }}</p>
+            </div>
+            <div>
+                <p>Diabetes Pedigree Function</p>
+                <p>{{ log.diabetes_pedigree_function }}</p>
+            </div>
+            <div>
+                <p>Skin Thickness</p>
+                <p>{{ log.skin_thickness }}<span style="font-size: 12px;"> mm</span></p>
+            </div>
+            <div>
+                <p>Insulin</p>
+                <p>{{ log.insulin }}</p>
+            </div>
+            <div>
+                <p>Glucose</p>
+                <p>{{ log.glucose }}</p>
+            </div>
+            <div>
+                <p>BMI</p>
+                <p>{{ log.bmi }}<span style="font-size: 12px;"> kg/m²</span></p>
+            </div>
+            <div>
+                <p class="prediction">Prediction</p>
+                <p>{{ log.diabetes_prediction|yesno:"Positive,Negative" }}</p>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+<script>
+    // Array of image sources
+    const images = [
+        "{{ MEDIA_ROOT }}{{ blood_pressure_plot }}",
+        "{{ MEDIA_ROOT }}{{ bmi_plot }}",
+        "{{ MEDIA_ROOT }}{{ glucose_plot }}",
+        "{{ MEDIA_ROOT }}{{ insuline_plot }}"
+    ];
+
+    let currentIndex = 0; // Start with the first image
+
+    // Select the elements
+    const carouselImage = document.getElementById('carousel-image');
+    const nextButton = document.getElementById('next-button');
+    const prevButton = document.getElementById('prev-button');
+
+    // Add event listener to the Next button
+    nextButton.addEventListener('click', () => {
+        currentIndex++; // Increment the index
+        if (currentIndex >= images.length) {
+            currentIndex = 0; // Loop back to the first image
+        }
+        carouselImage.src = images[currentIndex];
+    });
+
+    // Add event listener to the Previous button
+    prevButton.addEventListener('click', () => {
+        currentIndex--; // Decrement the index
+        if (currentIndex < 0) {
+            currentIndex = images.length - 1; // Loop back to the last image
+        }
+        carouselImage.src = images[currentIndex];
+    });
+</script>
 {% endblock %}
